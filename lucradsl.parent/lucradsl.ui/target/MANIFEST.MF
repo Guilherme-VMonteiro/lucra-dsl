@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: lucradsl.ui
+Bundle-ManifestVersion: 2
+Bundle-Name: lucradsl.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.202602280505
+Bundle-SymbolicName: lucradsl.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: lucradsl,lucradsl.ide,org.eclipse.xtext.ui,org.eclipse.x
+ text.ui.shared,org.eclipse.xtext.ui.codetemplates.ui,org.eclipse.ui.edi
+ tors;bundle-version="3.14.300",org.eclipse.ui.ide;bundle-version="3.18.
+ 500",org.eclipse.ui,org.eclipse.compare,org.eclipse.xtext.builder
+Import-Package: org.apache.log4j
+Export-Package: br.com.lucra.ui.quickfix,br.com.lucra.ui.contentassist,l
+ ucradsl.ui.internal
+Bundle-Activator: lucradsl.ui.internal.LucradslActivator
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=21))"
+

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: lucradsl.ide
+Bundle-ManifestVersion: 2
+Bundle-Name: lucradsl.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.202602280505
+Bundle-SymbolicName: lucradsl.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: lucradsl,org.eclipse.xtext.ide,org.eclipse.xtext.xbase.i
+ de,org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Export-Package: br.com.lucra.ide.contentassist.antlr.internal,br.com.luc
+ ra.ide.contentassist.antlr
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=21))"
+

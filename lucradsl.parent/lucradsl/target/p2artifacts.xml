@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='lucradsl' version='1.0.0.202602280505'>
+    <properties size='9'>
+      <property name='artifact.size' value='132154'/>
+      <property name='download.size' value='132154'/>
+      <property name='download.checksum.sha-512' value='3b1a45967819a841ee6f4017607b76ae3801ecd44be8a257d862739b4dd30b9b25a28e5f578f52a63779cac330a85e1e72b8e6f0e8f2af3d324619d416044e92'/>
+      <property name='download.checksum.sha-1' value='80e3c80613c7e5fa2078ae85b01d2be72e6720c1'/>
+      <property name='download.checksum.sha-256' value='622ee3ee400ecca10f4310fba15b2b692339c3e1696c5249f6d4f6e1f7665b81'/>
+      <property name='maven-groupId' value='lucradsl'/>
+      <property name='maven-artifactId' value='lucradsl'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      <property name='maven-type' value='eclipse-plugin'/>
+    </properties>
+  </artifact>
+</artifacts>

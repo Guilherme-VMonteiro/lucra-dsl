@@ -1,0 +1,47 @@
+grammar br.com.lucra.LucraDSL with org.eclipse.xtext.common.Terminals
+
+generate lucraDSL "http://www.com.br/lucra/LucraDSL"
+
+LucraDSL:
+    (elements+=Element)*;
+    
+Type:
+    PrimitiveType | ComplexTypeRef;
+    
+PrimitiveType:
+    {PrimitiveType} name=('string' | 'number' | 'date' | 'uuid' | 'money' | 'boolean');
+
+ComplexTypeRef:
+    type=[Element];
+
+Element:
+    Entity | EnumDsl;
+
+// <entity>
+
+Entity:
+    'entity' name=ID '{'
+        (fields+=EntityField)*
+    '}';
+
+EntityField:
+    name=ID type=Type (list?='*')? (nullable?='?')? (relation=RelationType)?;
+    
+enum RelationType:
+    CONTAINS = 'contains' | 	// A Entidade controla o ciclo de vida da outra
+    CONTAINED = 'contained' | 	// A entidade atual pertence à entidade alvo. Ela não vive sem o dono.
+    REFERS = 'refers';			// As entidades se conhecem, mas têm ciclos de vida independentes.
+    
+// </entity>
+
+// <enum>
+
+EnumDsl:
+    'enum' name=ID '{'
+        (literals+=EnumLiteral)*
+    '}';
+
+EnumLiteral:
+    name=ID;
+    
+// </enum>

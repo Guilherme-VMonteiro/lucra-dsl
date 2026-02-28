@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: lucradsl.tests
+Bundle-ManifestVersion: 2
+Bundle-Name: lucradsl.tests
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.202602280505
+Bundle-SymbolicName: lucradsl.tests; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: lucradsl,org.eclipse.xtext.testing,org.eclipse.xtext.xba
+ se.testing,org.eclipse.xtext.xbase.lib;bundle-version="2.41.0"
+Import-Package: org.junit.jupiter.api;version="[5.1.0,6.0.0)",org.junit.
+ jupiter.api.extension;version="[5.1.0,6.0.0)"
+Export-Package: br.com.lucra.tests;x-internal=true
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=21))"
+

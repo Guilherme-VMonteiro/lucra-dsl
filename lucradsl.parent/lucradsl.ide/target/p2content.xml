@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='lucradsl.ide' version='1.0.0.202602280505' generation='2'>
+    <update id='lucradsl.ide' range='[0.0.0,1.0.0.202602280505)' severity='0'/>
+    <properties size='6'>
+      <property name='org.eclipse.equinox.p2.name' value='lucradsl.ide'/>
+      <property name='org.eclipse.equinox.p2.provider' value='My Company'/>
+      <property name='maven-groupId' value='lucradsl'/>
+      <property name='maven-artifactId' value='lucradsl.ide'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      <property name='maven-type' value='eclipse-plugin'/>
+    </properties>
+    <provides size='6'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='lucradsl.ide' version='1.0.0.202602280505'/>
+      <provided namespace='osgi.bundle' name='lucradsl.ide' version='1.0.0.202602280505'/>
+      <provided namespace='java.package' name='br.com.lucra.ide.contentassist.antlr.internal' version='0.0.0'/>
+      <provided namespace='java.package' name='br.com.lucra.ide.contentassist.antlr' version='0.0.0'/>
+      <provided namespace='osgi.identity' name='lucradsl.ide' version='1.0.0.202602280505'>
+        <properties size='1'>
+          <property name='type' value='osgi.bundle'/>
+        </properties>
+      </provided>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='6'>
+      <required namespace='osgi.bundle' name='lucradsl' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.xtext.ide' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.xtext.xbase.ide' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.antlr.runtime' range='[3.2.0,3.2.1)'/>
+      <requiredProperties namespace='osgi.ee' match='(&amp;(osgi.ee=JavaSE)(version=21))'>
+        <description>
+          lucradsl.ide
+        </description>
+      </requiredProperties>
+      <required namespace='org.eclipse.equinox.p2.iu' name='lucradsl.ide.source' range='[1.0.0.202602280505,1.0.0.202602280505]' optional='true'>
+        <filter>
+          (org.eclipse.update.install.sources=true)
+        </filter>
+      </required>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='lucradsl.ide' version='1.0.0.202602280505'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: lucradsl.ide; singleton:=true&#xA;Bundle-Version: 1.0.0.202602280505&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>
