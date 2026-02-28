@@ -6,6 +6,7 @@ import br.com.lucra.lucraDSL.EntityField
 import br.com.lucra.lucraDSL.EnumDsl
 import br.com.lucra.lucraDSL.PrimitiveType
 import br.com.lucra.utils.ImportManager
+import static br.com.lucra.generator.utils.ArtifactType.DOMAIN_CLASS
 
 class TypeUtils {
 
@@ -63,12 +64,12 @@ class TypeUtils {
 			case type instanceof Entity: {
 				importManager.addImport(ClassUtils.generateImport(type))
 				
-				return ClassUtils.generateClassName(type)
+				return ClassUtils.generateClassName(type, DOMAIN_CLASS)
 			}
 			case type instanceof EnumDsl: {
 				importManager.addImport(ClassUtils.generateImport(type))
 				
-				return ClassUtils.generateClassName(type)
+				return ClassUtils.generateClassName(type, DOMAIN_CLASS)
 			}
 		}
 	}

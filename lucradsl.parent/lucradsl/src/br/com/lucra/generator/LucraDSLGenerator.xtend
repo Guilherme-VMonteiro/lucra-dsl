@@ -3,45 +3,18 @@
  */
 package br.com.lucra.generator
 
-import br.com.lucra.generator.utils.ClassUtils
-import br.com.lucra.lucraDSL.Element
-import br.com.lucra.utils.ImportManager
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 
 class LucraDSLGenerator extends AbstractGenerator {
-	
+
+	val elementGenerator = new ElementGenerator()
+	val repositoryGenerator = new RepositoryGenerator()
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		for(element: resource.allContents.toIterable.filter(Element)) {
-			System.out.println(String.format("1 Generating %s", element.name))
-			fsa.generateFile(
-				ClassUtils.generateFilePath(element).toString(),
-				element.compile
-			)
-		}
-	}
-	
-	private def compile(Element element) {
-		val importManager = new ImportManager()
-		val classPackage = ClassUtils.generatePackagePath(element)
-		val classType = ClassUtils.getClassType(element)
-		val className = ClassUtils.generateClassName(element)
-		val classAnnotations = ClassUtils.generateClassAnnotations(element, importManager)
-		val classFields = ClassUtils.generateClassFields(element, importManager)
-		val classImports = ClassUtils.generateClassImports(element, importManager)
-		
-		'''
-			package «classPackage»;
-			
-			«classImports»
-			
-			«classAnnotations»
-			public «classType» «className» {
-				«classFields»
-			}
-		'''
+		elementGenerator.doGenerate(resource, fsa, context)
+		repositoryGenerator.doGenerate(resource, fsa, context)
 	}
 }
