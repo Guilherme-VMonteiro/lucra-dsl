@@ -8,8 +8,6 @@ import br.com.lucra.utils.StringUtils
 
 class EntityRelationshipAnnotationGenerator {
 
-	val stringUtils = new StringUtils()
-
 	def generateRelationshipAnnotations(EntityField field, ImportManager importManager) {
 		switch field.relation {
 			case RelationType.CONTAINS:
@@ -94,6 +92,6 @@ class EntityRelationshipAnnotationGenerator {
 	}
 
 	private def getJoinColumnName(String fieldName) {
-		return stringUtils.toSnakeCase(fieldName) + "_id"
+		return StringUtils.toSnakeCase(fieldName) + "_id"
 	}
 }

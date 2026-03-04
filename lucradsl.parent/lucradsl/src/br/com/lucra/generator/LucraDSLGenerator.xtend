@@ -11,10 +11,14 @@ import org.eclipse.xtext.generator.IGeneratorContext
 class LucraDSLGenerator extends AbstractGenerator {
 
 	val elementGenerator = new ElementGenerator()
+	val dtoGenerator = new DtoGenerator()
 	val repositoryGenerator = new RepositoryGenerator()
+	val serviceGenerator = new ServiceGenerator()
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		elementGenerator.doGenerate(resource, fsa, context)
+		dtoGenerator.doGenerate(resource, fsa, context)
 		repositoryGenerator.doGenerate(resource, fsa, context)
+		serviceGenerator.doGenerate(resource, fsa, context)
 	}
 }

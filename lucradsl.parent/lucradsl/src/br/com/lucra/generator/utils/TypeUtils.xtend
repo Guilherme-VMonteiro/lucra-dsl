@@ -1,16 +1,18 @@
 package br.com.lucra.generator.utils
 
+import br.com.lucra.generator.utils.helpers.ClassNameResolver
 import br.com.lucra.lucraDSL.ComplexTypeRef
 import br.com.lucra.lucraDSL.Entity
 import br.com.lucra.lucraDSL.EntityField
 import br.com.lucra.lucraDSL.EnumDsl
 import br.com.lucra.lucraDSL.PrimitiveType
 import br.com.lucra.utils.ImportManager
+
 import static br.com.lucra.generator.utils.ArtifactType.DOMAIN_CLASS
 
 class TypeUtils {
 
-	def resolveTypeName(EntityField field, ImportManager importManager) {
+	def resolveTypeName(EntityField field, ImportManager importManager, ArtifactType artifactType) {
 		val type = field.type
 
 		switch type {
@@ -18,7 +20,7 @@ class TypeUtils {
 				return getPrimitiveType((type as PrimitiveType), importManager)
 			}
 			case type instanceof ComplexTypeRef: {
-				return getComplexType((type as ComplexTypeRef), importManager)
+				return getComplexType((type as ComplexTypeRef), importManager, artifactType)
 			}
 		}
 	}
@@ -57,19 +59,19 @@ class TypeUtils {
 		}
 	}
 
-	private def getComplexType(ComplexTypeRef ref, ImportManager importManager) {
+	private def getComplexType(ComplexTypeRef ref, ImportManager importManager, ArtifactType artifactType) {
 		val type = ref.type
-		
+
 		switch type {
-			case type instanceof Entity: {
-				importManager.addImport(ClassUtils.generateImport(type))
-				
-				return ClassUtils.generateClassName(type, DOMAIN_CLASS)
+			case type instanceof Entity: {				
+				importManager.addImport(ClassNameResolver.resolveFullyQualifiedName(type, artifactType))
+
+				return ClassNameResolver.resolve(type, artifactType)
 			}
 			case type instanceof EnumDsl: {
-				importManager.addImport(ClassUtils.generateImport(type))
-				
-				return ClassUtils.generateClassName(type, DOMAIN_CLASS)
+				importManager.addImport(ClassNameResolver.resolveFullyQualifiedName(type, DOMAIN_CLASS))
+
+				return ClassNameResolver.resolve(type, DOMAIN_CLASS)
 			}
 		}
 	}

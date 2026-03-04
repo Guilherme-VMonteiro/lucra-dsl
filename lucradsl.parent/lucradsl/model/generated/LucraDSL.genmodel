@@ -33,6 +33,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//EntityField/list"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//EntityField/nullable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//EntityField/relation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//EntityField/omitDto"/>
     </genClasses>
     <genClasses ecoreClass="LucraDSL.ecore#//EnumDsl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LucraDSL.ecore#//EnumDsl/literals"/>

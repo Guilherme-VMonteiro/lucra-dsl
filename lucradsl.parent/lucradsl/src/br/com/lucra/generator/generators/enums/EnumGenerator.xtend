@@ -6,8 +6,6 @@ import br.com.lucra.utils.StringUtils
 
 class EnumGenerator {
 
-	val stringUtils = new StringUtils()
-
 	def generateFields(EnumDsl enumm) {
 		'''
 			«FOR literal : enumm.literals SEPARATOR ',\n'»«literal.generateLiteral().toString.trim»«ENDFOR»
@@ -15,6 +13,6 @@ class EnumGenerator {
 	}
 
 	private def generateLiteral(EnumLiteral literal) {
-		'''«stringUtils.toUpperCaseSpaced(literal.name)»'''
+		'''«StringUtils.toUpperCaseSpaced(literal.name)»'''
 	}
 }
