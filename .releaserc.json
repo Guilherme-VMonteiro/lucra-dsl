@@ -8,14 +8,18 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "cd lucradsl.parent && mvn versions:set -DnewVersion=${nextRelease.version} -DgenerateBackupPoms=false",
+        "prepareCmd": "cd lucradsl.parent && mvn org.eclipse.tycho:tycho-versions-plugin:set-version -DnewVersion=${nextRelease.version}",
         "publishCmd": "cd lucradsl.parent && mvn -B install -pl lucradsl.target -DskipTests && mvn -B clean deploy -pl lucradsl"
       }
     ],
     [
       "@semantic-release/git",
       {
-        "assets": ["lucradsl.parent/pom.xml"],
+        "assets": [
+          "lucradsl.parent/pom.xml",
+          "lucradsl.parent/*/pom.xml",
+          "lucradsl.parent/*/META-INF/MANIFEST.MF"
+        ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
