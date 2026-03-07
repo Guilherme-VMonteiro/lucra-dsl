@@ -34,7 +34,7 @@ jobs:
           mvn versions:set -DnewVersion=$SNAPSHOT -DgenerateBackupPoms=false
 
       - name: Deploy snapshot
-        working-directory: lucradsl.parent/lucradsl
-        run: mvn -B clean deploy
+        working-directory: lucradsl.parent
+        run: mvn -B install -pl lucradsl.target -DskipTests && mvn -B clean deploy -pl lucradsl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

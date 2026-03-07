@@ -9,7 +9,7 @@
       "@semantic-release/exec",
       {
         "prepareCmd": "cd lucradsl.parent && mvn versions:set -DnewVersion=${nextRelease.version} -DgenerateBackupPoms=false",
-        "publishCmd": "cd lucradsl.parent/lucradsl && mvn -B clean deploy"
+        "publishCmd": "cd lucradsl.parent && mvn -B install -pl lucradsl.target -DskipTests && mvn -B clean deploy -pl lucradsl"
       }
     ],
     [
