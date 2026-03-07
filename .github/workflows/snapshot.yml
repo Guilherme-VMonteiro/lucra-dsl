@@ -1,9 +1,7 @@
 name: Snapshot
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   snapshot:
@@ -26,6 +24,7 @@ jobs:
           server-password: GITHUB_TOKEN
 
       - name: Generate snapshot version
+        working-directory: lucradsl.parent/lucradsl
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           TIMESTAMP=$(date +%s%3N)
@@ -35,6 +34,7 @@ jobs:
           mvn versions:set -DnewVersion=$SNAPSHOT -DgenerateBackupPoms=false
 
       - name: Deploy snapshot
+        working-directory: lucradsl.parent/lucradsl
         run: mvn -B clean deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
