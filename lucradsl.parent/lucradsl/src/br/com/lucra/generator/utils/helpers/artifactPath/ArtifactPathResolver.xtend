@@ -10,7 +10,8 @@ class ArtifactPathResolver {
 		ArtifactType.DTO -> new DtoPathStrategy,
 		ArtifactType.REPOSITORY -> new RepositoryPathStrategy,
 		ArtifactType.SERVICE -> new ServicePathStrategy(false),
-		ArtifactType.SERVICE_IMPL -> new ServicePathStrategy(true)
+		ArtifactType.SERVICE_IMPL -> new ServicePathStrategy(true),
+		ArtifactType.REST_HANDLER -> new RestHandlerPathStrategy()
 	}
 
 	static def generateFilePath(Element element, ArtifactType type) {

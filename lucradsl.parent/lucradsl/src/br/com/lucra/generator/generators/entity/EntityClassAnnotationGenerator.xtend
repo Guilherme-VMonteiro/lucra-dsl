@@ -11,6 +11,7 @@ class EntityClassAnnotationGenerator {
 		switch artifactType {
 			case DOMAIN_CLASS: generateDomainClassAnnotations(entity, imports)
 			case DTO: generateDtoClassAnnotations(entity, imports)
+			case REST_HANDLER: generateRestHandlerClassAnnotations(entity, imports)
 			default: ''
 		}
 	}
@@ -70,5 +71,21 @@ class EntityClassAnnotationGenerator {
 		}
 
 		parts.join(", ")
+	}
+	
+	private def generateRestHandlerClassAnnotations(Entity entity, ImportManager imports) {
+		imports.addImports(
+			"org.springframework.web.bind.annotation.RestController",
+			"org.springframework.web.bind.annotation.RequestMapping",
+			"lombok.RequiredArgsConstructor"
+		)
+		
+		val entityName = entity.name
+		
+		'''
+			@RestController
+			@RequestMapping("/api/entity/«entityName»")
+			@RequiredArgsConstructor
+		'''
 	}
 }

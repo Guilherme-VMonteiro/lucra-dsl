@@ -55,6 +55,10 @@ class ClassNameResolver {
 				ensureEntity(type, element)
 				return "Service"
 			}
+			case REST_HANDLER: {
+				ensureEntity(type, element)
+				return "RestHandler"
+			}
 			default: {
 				unsupported(type, element)
 			}

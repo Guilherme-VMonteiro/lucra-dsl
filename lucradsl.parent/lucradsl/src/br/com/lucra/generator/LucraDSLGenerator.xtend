@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import br.com.lucra.generator.utils.RestHandlerGenerator
 
 class LucraDSLGenerator extends AbstractGenerator {
 
@@ -14,11 +15,14 @@ class LucraDSLGenerator extends AbstractGenerator {
 	val dtoGenerator = new DtoGenerator()
 	val repositoryGenerator = new RepositoryGenerator()
 	val serviceGenerator = new ServiceGenerator()
+	val restHandlerGenerator = new RestHandlerGenerator()
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		elementGenerator.doGenerate(resource, fsa, context)
 		dtoGenerator.doGenerate(resource, fsa, context)
 		repositoryGenerator.doGenerate(resource, fsa, context)
 		serviceGenerator.doGenerate(resource, fsa, context)
+		serviceGenerator.doGenerate(resource, fsa, context)
+		restHandlerGenerator.doGenerate(resource, fsa, context)
 	}
 }

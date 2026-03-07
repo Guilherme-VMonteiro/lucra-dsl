@@ -14,7 +14,8 @@ class PackagePathResolver {
 			case DTO:
 				domainPackage(element)
 			case REPOSITORY,
-			case SERVICE:
+			case SERVICE,
+			case REST_HANDLER:
 				entityOnlyPackage(element)
 			default:
 				unsupported(type, element)
