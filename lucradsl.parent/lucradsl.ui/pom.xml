@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>lucradsl</groupId>
 		<artifactId>lucradsl.parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>lucradsl.ui</artifactId>
 	<packaging>eclipse-plugin</packaging>
