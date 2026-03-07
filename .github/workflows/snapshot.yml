@@ -24,9 +24,9 @@ jobs:
           server-password: GITHUB_TOKEN
 
       - name: Generate snapshot version
-        working-directory: lucradsl.parent/lucradsl
+        working-directory: lucradsl.parent
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | sed 's/-SNAPSHOT//')
           TIMESTAMP=$(date +%s%3N)
 
           SNAPSHOT="$VERSION-$TIMESTAMP-SNAPSHOT"
