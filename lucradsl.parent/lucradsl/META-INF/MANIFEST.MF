@@ -3,7 +3,7 @@ Automatic-Module-Name: lucradsl
 Bundle-ManifestVersion: 2
 Bundle-Name: lucradsl
 Bundle-Vendor: My Company
-Bundle-Version: 1.2.0
+Bundle-Version: 1.2.1
 Bundle-SymbolicName: lucradsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,

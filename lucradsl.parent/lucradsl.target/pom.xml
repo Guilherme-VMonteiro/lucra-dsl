@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>lucradsl</groupId>
 		<artifactId>lucradsl.parent</artifactId>
-		<version>1.2.0</version>
+		<version>1.2.1</version>
 	</parent>
 	<artifactId>lucradsl.target</artifactId>
 	<packaging>eclipse-target-definition</packaging>
