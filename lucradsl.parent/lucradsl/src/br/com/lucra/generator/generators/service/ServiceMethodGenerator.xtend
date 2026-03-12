@@ -47,16 +47,24 @@ class ServiceMethodGenerator {
 		if (implementation) {
 			val repository = ClassNameResolver.resolve(entity, ArtifactType.REPOSITORY).toFirstLower()
 			val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
+			val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
 			val mapperFieldName = ClassNameResolver.resolve(entity, ArtifactType.MAPPER).toFirstLower()
 
-			importManager.addImport("java.util.Optional")
-			importManager.addImport("java.util.UUID")
+			importManager.addImports(
+				"java.util.Optional", 
+				"java.util.UUID", 
+				"jakarta.persistence.EntityNotFoundException"
+			)
 
 			'''
 				
 				@Override
-				public Optional<«dtoClassName»> findById(UUID id) {
-					return «repository».findById(id).map(«mapperFieldName»::toTarget);
+				public «dtoClassName» findById(UUID id) {
+					«entityClassName» entity = «repository».findById(id).orElseThrow(
+						() -> new EntityNotFoundException(String.format("«entityClassName» id(%s) not found.", id))
+					);
+					
+					return «mapperFieldName».toTarget(entity);
 				}
 			'''
 		} else {
@@ -66,7 +74,7 @@ class ServiceMethodGenerator {
 
 			'''
 				
-				Optional<«dtoClassName»> findById(UUID id);
+				«dtoClassName» findById(UUID id);
 			'''
 		}
 	}
@@ -116,6 +124,7 @@ class ServiceMethodGenerator {
 				public «dtoClassName» save(«dtoClassName» dto) {
 					«entityClassName» entity = «mapperFieldName».toSource(dto);
 					«entityClassName» saved = «repository».save(entity);
+					
 					return «mapperFieldName».toTarget(saved);
 				}
 			'''
