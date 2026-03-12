@@ -16,13 +16,14 @@ class LucraDSLGenerator extends AbstractGenerator {
 	val repositoryGenerator = new RepositoryGenerator()
 	val serviceGenerator = new ServiceGenerator()
 	val restHandlerGenerator = new RestHandlerGenerator()
+	val mapperGenerator = new MapperGenerator()
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		elementGenerator.doGenerate(resource, fsa, context)
 		dtoGenerator.doGenerate(resource, fsa, context)
 		repositoryGenerator.doGenerate(resource, fsa, context)
 		serviceGenerator.doGenerate(resource, fsa, context)
-		serviceGenerator.doGenerate(resource, fsa, context)
 		restHandlerGenerator.doGenerate(resource, fsa, context)
+		mapperGenerator.doGenerate(resource, fsa, context)
 	}
 }

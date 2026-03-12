@@ -47,6 +47,10 @@ class ClassNameResolver {
 				ensureEntity(type, element)
 				return "Dto"
 			}
+			case MAPPER: {
+				ensureEntity(type, element)
+				return "Mapper"
+			}
 			case REPOSITORY: {
 				ensureEntity(type, element)
 				return "Repository"

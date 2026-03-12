@@ -11,7 +11,8 @@ class PackagePathResolver {
 	static def String resolve(Element element, ArtifactType type) {
 		switch type {
 			case DOMAIN_CLASS,
-			case DTO:
+			case DTO,
+			case MAPPER:
 				domainPackage(element)
 			case REPOSITORY,
 			case SERVICE,

@@ -46,7 +46,8 @@ class ServiceMethodGenerator {
 	private def generateFindById(Entity entity, ImportManager importManager, boolean implementation) {
 		if (implementation) {
 			val repository = ClassNameResolver.resolve(entity, ArtifactType.REPOSITORY).toFirstLower()
-			val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
+			val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
+			val mapperFieldName = ClassNameResolver.resolve(entity, ArtifactType.MAPPER).toFirstLower()
 
 			importManager.addImport("java.util.Optional")
 			importManager.addImport("java.util.UUID")
@@ -54,19 +55,18 @@ class ServiceMethodGenerator {
 			'''
 				
 				@Override
-				public Optional<«entityClassName»> findById(UUID id) {
-					return «repository».findById(id);
+				public Optional<«dtoClassName»> findById(UUID id) {
+					return «repository».findById(id).map(«mapperFieldName»::toTarget);
 				}
 			'''
 		} else {
-			val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
+			val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
 
-			importManager.addImport("java.util.Optional")
-			importManager.addImport("java.util.UUID")
+			importManager.addImports("java.util.Optional", "java.util.UUID")
 
 			'''
 				
-				Optional<«entityClassName»> findById(UUID id);
+				Optional<«dtoClassName»> findById(UUID id);
 			'''
 		}
 	}
@@ -74,7 +74,8 @@ class ServiceMethodGenerator {
 	private def generateList(Entity entity, ImportManager importManager, boolean implementation) {
 		if (implementation) {
 			val repository = ClassNameResolver.resolve(entity, ArtifactType.REPOSITORY).toFirstLower()
-			val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
+			val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
+			val mapperFieldName = ClassNameResolver.resolve(entity, ArtifactType.MAPPER).toFirstLower()
 
 			importManager.addImport("org.springframework.data.domain.Page")
 			importManager.addImport("org.springframework.data.domain.Pageable")
@@ -82,19 +83,21 @@ class ServiceMethodGenerator {
 			'''
 				
 				@Override
-				public Page<«entityClassName»> list(Pageable pageable) {
-					return «repository».findAll(pageable);
+				public Page<«dtoClassName»> list(Pageable pageable) {
+					return «repository».findAll(pageable).map(«mapperFieldName»::toTarget);
 				}
 			'''
 		} else {
-			val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
+			val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
 
-			importManager.addImport("org.springframework.data.domain.Page")
-			importManager.addImport("org.springframework.data.domain.Pageable")
+			importManager.addImports(
+				"org.springframework.data.domain.Page",
+				"org.springframework.data.domain.Pageable"
+			)
 
 			'''
 				
-				Page<«entityClassName»> list(Pageable pageable);
+				Page<«dtoClassName»> list(Pageable pageable);
 			'''
 		}
 
@@ -104,20 +107,24 @@ class ServiceMethodGenerator {
 		if (implementation) {
 			val repository = ClassNameResolver.resolve(entity, ArtifactType.REPOSITORY).toFirstLower()
 			val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
+			val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
+			val mapperFieldName = ClassNameResolver.resolve(entity, ArtifactType.MAPPER).toFirstLower()
 
 			'''
 				
 				@Override
-				public «entityClassName» save(«entityClassName» entity) {
-					return «repository».save(entity);
+				public «dtoClassName» save(«dtoClassName» dto) {
+					«entityClassName» entity = «mapperFieldName».toSource(dto);
+					«entityClassName» saved = «repository».save(entity);
+					return «mapperFieldName».toTarget(saved);
 				}
 			'''
 		} else {
-			val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
+			val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
 
 			'''
 				
-				«entityClassName» save(«entityClassName» entity);
+				«dtoClassName» save(«dtoClassName» entity);
 			'''
 		}
 	}

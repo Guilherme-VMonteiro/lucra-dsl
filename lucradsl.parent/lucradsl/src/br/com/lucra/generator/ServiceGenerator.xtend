@@ -63,6 +63,8 @@ class ServiceGenerator extends AbstractGenerator {
 		val packagePath = PackagePathResolver.resolve(entity, ArtifactType.SERVICE)
 		val serviceClassName = ClassNameResolver.resolve(entity, ArtifactType.SERVICE)
 		val repositoryName = ClassNameResolver.resolve(entity, ArtifactType.REPOSITORY)
+		val mapperName = ClassNameResolver.resolve(entity, ArtifactType.MAPPER)
+		val mapperFieldName = mapperName.toFirstLower()
 
 		val methods = #[
 			ServiceBaseMethod.FIND_BY_ID,
@@ -73,6 +75,7 @@ class ServiceGenerator extends AbstractGenerator {
 
 		importManager.addImport("org.springframework.stereotype.Service");
 		importManager.addImport("lombok.RequiredArgsConstructor");
+		importManager.addImport(ClassNameResolver.resolveFullyQualifiedName(entity, ArtifactType.MAPPER));
 
 		val principal = '''
 			@Service
@@ -80,6 +83,7 @@ class ServiceGenerator extends AbstractGenerator {
 			public class «serviceClassName»Impl implements «serviceClassName» {
 			
 				private final «repositoryName» «repositoryName.toString().toFirstLower()»;
+				private final «mapperName» «mapperFieldName»;
 				«serviceMethodGenerator.generateMethods(entity, importManager, true, methods)»
 			}
 		'''

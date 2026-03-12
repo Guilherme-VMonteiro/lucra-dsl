@@ -8,6 +8,7 @@ class ArtifactPathResolver {
 	static val strategies = #{
 		ArtifactType.DOMAIN_CLASS -> new DomainClassPathStrategy,
 		ArtifactType.DTO -> new DtoPathStrategy,
+		ArtifactType.MAPPER -> new MapperPathStrategy,
 		ArtifactType.REPOSITORY -> new RepositoryPathStrategy,
 		ArtifactType.SERVICE -> new ServicePathStrategy(false),
 		ArtifactType.SERVICE_IMPL -> new ServicePathStrategy(true),
