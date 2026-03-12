@@ -28,9 +28,11 @@ class MapperGenerator extends AbstractGenerator {
 	private def compileMapper(Entity entity) {
 		val importManager = new ImportManager()
 		
-		importManager.addImport("br.com.lucra.core.mapper")
-		importManager.addImport("lombok.RequiredArgsConstructor")
-		importManager.addImport("org.springframework.stereotype.Component")
+		importManager.addImports(
+			"br.com.lucra.core.mapper.Mapper",
+			"lombok.RequiredArgsConstructor",
+			"org.springframework.stereotype.Component"
+		)
 		
 		val classPackage = PackagePathResolver.resolve(entity, ArtifactType.MAPPER)
 		val className = ClassNameResolver.resolve(entity, ArtifactType.MAPPER)

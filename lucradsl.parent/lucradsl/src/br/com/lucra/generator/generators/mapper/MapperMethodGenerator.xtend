@@ -17,12 +17,11 @@ class MapperMethodGenerator {
 	) {
 		
 		importManager.addImport("static java.util.Objects.isNull")
-		importManager.addImport("java.util.List")
 		
 		val entityClassName = ClassNameResolver.resolve(entity, ArtifactType.DOMAIN_CLASS)
 		val dtoClassName = ClassNameResolver.resolve(entity, ArtifactType.DTO)
-		val toTargetMappings = generateMappings(entity, true)
-		val toSourceMappings = generateMappings(entity, false)
+		val toTargetMappings = generateMappings(entity, importManager, true)
+		val toSourceMappings = generateMappings(entity, importManager, false)
 		
 		'''
 			@Override
@@ -64,12 +63,12 @@ class MapperMethodGenerator {
 		'''
 	}
 
-	private def generateMappings(Entity entity, boolean toTarget) {
+	private def generateMappings(Entity entity, ImportManager importManager, boolean toTarget) {
 		val fields = entity.fields.filter[omitDto === null]
 
 		'''
 			«FOR field : fields»
-				«val assignment = field.generateFieldAssignment(entity, toTarget)»
+				«val assignment = field.generateFieldAssignment(entity, importManager, toTarget)»
 				«IF !assignment.empty»
 					«assignment»
 				«ENDIF»
@@ -77,7 +76,7 @@ class MapperMethodGenerator {
 		'''
 	}
 
-	private def generateFieldAssignment(EntityField field, Entity currentEntity, boolean toTarget) {
+	private def generateFieldAssignment(EntityField field, Entity currentEntity, ImportManager importManager, boolean toTarget) {
 		if (!isCompatible(field)) {
 			return ''
 		}
@@ -88,6 +87,8 @@ class MapperMethodGenerator {
 		val relatedEntity = field.getRelatedEntity
 
 		if (field.list) {
+			importManager.addImport("java.util.List")
+			
 			if (relatedEntity !== null) {
 				val mapperRef = mapperRef(currentEntity, relatedEntity)
 
