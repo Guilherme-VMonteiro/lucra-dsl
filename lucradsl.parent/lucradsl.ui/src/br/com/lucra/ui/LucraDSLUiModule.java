@@ -4,6 +4,11 @@
 package br.com.lucra.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+
+import br.com.lucra.ui.highlighting.LucraHighlightingConfiguration;
+import br.com.lucra.ui.highlighting.SemanticHighlightingCalculator;
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -12,5 +17,13 @@ public class LucraDSLUiModule extends AbstractLucraDSLUiModule {
 
 	public LucraDSLUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+	}
+
+	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+		return SemanticHighlightingCalculator.class;
+	}
+
+	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+		return LucraHighlightingConfiguration.class;
 	}
 }
