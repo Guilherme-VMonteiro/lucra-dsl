@@ -3,6 +3,7 @@ package br.com.lucra.generator.utils.helpers.artifactPath
 import br.com.lucra.lucraDSL.Element
 import br.com.lucra.lucraDSL.Entity
 import br.com.lucra.lucraDSL.EnumDsl
+import br.com.lucra.lucraDSL.RecordDsl
 import br.com.lucra.utils.Constants
 import br.com.lucra.utils.StringUtils
 
@@ -12,6 +13,14 @@ class DomainClassPathStrategy implements ArtifactPathStrategy {
 		switch element {
 			Entity: '''«Constants.serverGenBasePath»«element.name»/«getDomainClassName(element)».java'''
 			EnumDsl: '''«Constants.serverGenBasePath»enums/«getDomainClassName(element)».java'''
+			RecordDsl:
+				throw new IllegalArgumentException(
+					String.format(
+						"%s - Record '%s' must use ArtifactType.RECORD strategy",
+						this.getClass().getSimpleName(),
+						element.name
+					)
+				)
 			default:
 				throw new IllegalArgumentException(
 					String.format("%s - Unsupported element '%s'", this.getClass().getSimpleName(), element.name))

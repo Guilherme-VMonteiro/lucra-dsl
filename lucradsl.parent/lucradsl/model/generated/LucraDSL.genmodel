@@ -35,6 +35,15 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//EntityField/relation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//EntityField/omitDto"/>
     </genClasses>
+    <genClasses ecoreClass="LucraDSL.ecore#//RecordDsl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LucraDSL.ecore#//RecordDsl/fields"/>
+    </genClasses>
+    <genClasses ecoreClass="LucraDSL.ecore#//RecordField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//RecordField/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LucraDSL.ecore#//RecordField/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//RecordField/list"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LucraDSL.ecore#//RecordField/nullable"/>
+    </genClasses>
     <genClasses ecoreClass="LucraDSL.ecore#//EnumDsl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference LucraDSL.ecore#//EnumDsl/literals"/>
     </genClasses>

@@ -13,6 +13,7 @@ import br.com.lucra.lucraDSL.Entity;
 import br.com.lucra.lucraDSL.EnumDsl;
 import br.com.lucra.lucraDSL.LucraDSLPackage;
 import br.com.lucra.lucraDSL.PrimitiveType;
+import br.com.lucra.lucraDSL.RecordDsl;
 
 public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingCalculator{
 
@@ -28,6 +29,10 @@ public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingC
 
         if (object instanceof EnumDsl) {
             highlightKeyword(object, "enum", LucraHighlightingConfiguration.ENUM, acceptor);
+        }
+
+        if (object instanceof RecordDsl) {
+            highlightKeyword(object, "record", LucraHighlightingConfiguration.RECORD, acceptor);
         }
 
         if (object instanceof PrimitiveType) {

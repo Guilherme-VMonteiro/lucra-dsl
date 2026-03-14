@@ -11,6 +11,7 @@ public class LucraHighlightingConfiguration extends DefaultHighlightingConfigura
 	
     public static final String ENTITY = "entity";
     public static final String ENUM = "enum";
+    public static final String RECORD = "record";
     public static final String PRIMITIVE_TYPE = "primitiveType";
     public static final String COMPLEX_TYPE_REF = "complexTypeRef";
 
@@ -27,6 +28,12 @@ public class LucraHighlightingConfiguration extends DefaultHighlightingConfigura
         acceptor.acceptDefaultHighlighting(
             ENUM,
             "Enum",
+            keywordAccentTextStyle()
+        );
+
+        acceptor.acceptDefaultHighlighting(
+            RECORD,
+            "Record",
             keywordAccentTextStyle()
         );
 

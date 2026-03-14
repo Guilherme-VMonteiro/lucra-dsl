@@ -5,6 +5,7 @@ import br.com.lucra.lucraDSL.Entity
 import br.com.lucra.lucraDSL.EnumDsl
 import br.com.lucra.lucraDSL.Element
 import br.com.lucra.generator.utils.ArtifactType
+import br.com.lucra.lucraDSL.RecordDsl
 
 class PackagePathResolver {
 
@@ -12,7 +13,8 @@ class PackagePathResolver {
 		switch type {
 			case DOMAIN_CLASS,
 			case DTO,
-			case MAPPER:
+			case MAPPER,
+			case RECORD:
 				domainPackage(element)
 			case REPOSITORY,
 			case SERVICE,
@@ -28,6 +30,7 @@ class PackagePathResolver {
 			Entity:
 				entityBasePackage(element)
 			EnumDsl: '''«Constants.serverGenBasePackage»enums'''
+			RecordDsl: '''«Constants.serverGenBasePackage»records'''
 			default:
 				unsupported("DOMAIN_CLASS", element)
 		}

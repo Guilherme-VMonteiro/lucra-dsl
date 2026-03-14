@@ -1,39 +1,45 @@
 package br.com.lucra.generator
 
 import br.com.lucra.generator.generators.entity.EntityClassAnnotationGenerator
+import br.com.lucra.generator.generators.record.RecordAttributeGenerator
 import br.com.lucra.generator.utils.ArtifactType
 import br.com.lucra.generator.utils.helpers.ClassNameResolver
 import br.com.lucra.generator.utils.helpers.artifactPath.ArtifactPathResolver
 import br.com.lucra.generator.utils.helpers.packagePath.PackagePathResolver
-import br.com.lucra.lucraDSL.Entity
+import br.com.lucra.lucraDSL.RecordDsl
 import br.com.lucra.utils.ImportManager
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import br.com.lucra.generator.generators.entity.FieldGenerator
 
-class DtoGenerator extends AbstractGenerator {
+class RecordGenerator extends AbstractGenerator {
 
 	val entityClassAnnotationGenerator = new EntityClassAnnotationGenerator()
-	val fieldGenerator = new FieldGenerator()
+	val recordAttributeGenerator = new RecordAttributeGenerator()
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		for (entity : resource.allContents.toIterable.filter(Entity)) {
+		for (recordDsl : resource.allContents.toIterable.filter(RecordDsl)) {
 			fsa.generateFile(
-				ArtifactPathResolver.generateFilePath(entity, ArtifactType.DTO).toString(),
-				entity.compileDto
+				ArtifactPathResolver.generateFilePath(recordDsl, ArtifactType.RECORD).toString(),
+				recordDsl.compileRecord
 			)
 		}
 	}
 
-	private def compileDto(Entity entity) {
+	private def compileRecord(RecordDsl recordDsl) {
 		val importManager = new ImportManager()
 
-		val classPackage = PackagePathResolver.resolve(entity, ArtifactType.DTO)
-		val className = ClassNameResolver.resolve(entity, ArtifactType.DTO)
-		val classAnnotations = entityClassAnnotationGenerator.generateClassAnnotations(entity, importManager, ArtifactType.DTO)
-		val classFields = fieldGenerator.generateFields(entity, importManager, ArtifactType.DTO)
+		val classPackage = PackagePathResolver.resolve(recordDsl, ArtifactType.RECORD)
+		val className = ClassNameResolver.resolve(recordDsl, ArtifactType.RECORD)
+		val classAnnotations = entityClassAnnotationGenerator.generateClassAnnotations(
+			recordDsl,
+			importManager,
+			ArtifactType.RECORD
+		)
+		val classFields = recordDsl.fields
+			.map[recordAttributeGenerator.generateField(it, importManager, ArtifactType.RECORD).toString]
+			.join(",\n")
 
 		'''
 			package «classPackage»;
@@ -41,9 +47,9 @@ class DtoGenerator extends AbstractGenerator {
 			«importManager.render»
 			
 			«classAnnotations»
-			public class «className» {
+			public record «className»(
 				«classFields»
-			}
+			){}
 		'''
 	}
 }

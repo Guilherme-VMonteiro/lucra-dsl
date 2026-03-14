@@ -10,7 +10,7 @@ PrimitiveType: {PrimitiveType} name=('string' | 'number' | 'date' | 'uuid' | 'mo
 
 ComplexTypeRef: type=[Element];
 
-Element: Entity | EnumDsl;
+Element: Entity | EnumDsl | RecordDsl;
 
 // <entity>
 
@@ -24,6 +24,13 @@ EntityField: name=ID type=Type (list?='*')? (nullable?='?')? (relation=RelationT
 enum RelationType: CONTAINS = 'contains' | CONTAINED = 'contained' | REFERS = 'refers';			
     
 // </entity>
+
+RecordDsl:
+	'record' name=ID '{'
+		(fields+=RecordField)*
+	'}';
+
+RecordField: name=ID type=Type (list?='*')? (nullable?='?')?;
 
 // <enum>
 

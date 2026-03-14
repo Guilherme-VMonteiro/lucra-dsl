@@ -3,7 +3,9 @@
  */
 package br.com.lucra.tests
 
+import br.com.lucra.lucraDSL.Entity
 import br.com.lucra.lucraDSL.LucraDSL
+import br.com.lucra.lucraDSL.RecordDsl
 import com.google.inject.Inject
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.extensions.InjectionExtension
@@ -21,10 +23,61 @@ class LucraDSLParsingTest {
 	@Test
 	def void loadModel() {
 		val result = parseHelper.parse('''
-			Hello Xtext!
+			entity venda {
+				id uuid
+				valor money
+			}
 		''')
 		Assertions.assertNotNull(result)
 		val errors = result.eResource.errors
 		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+	}
+
+	@Test
+	def void parseRecordDeclaration() {
+		val result = parseHelper.parse('''
+			record totalizadorVenda {
+				total money
+				quantidade number
+			}
+		''')
+
+		Assertions.assertNotNull(result)
+		Assertions.assertTrue(result.eResource.errors.isEmpty, '''Unexpected errors: «result.eResource.errors.join(", ")»''')
+		Assertions.assertEquals(1, result.elements.filter(RecordDsl).size)
+		Assertions.assertEquals("totalizadorVenda", result.elements.filter(RecordDsl).head.name)
+	}
+
+	@Test
+	def void parseComplexTypeRefToRecord() {
+		val result = parseHelper.parse('''
+			record totalizadorVenda {
+				total money
+			}
+
+			entity venda {
+				id uuid
+				resumo totalizadorVenda
+			}
+		''')
+
+		Assertions.assertNotNull(result)
+		Assertions.assertTrue(result.eResource.errors.isEmpty, '''Unexpected errors: «result.eResource.errors.join(", ")»''')
+		Assertions.assertEquals(1, result.elements.filter(Entity).size)
+		Assertions.assertEquals(1, result.elements.filter(RecordDsl).size)
+	}
+
+	@Test
+	def void parseRecordFieldModifiers() {
+		val result = parseHelper.parse('''
+			record itemResumo {
+				ids uuid*
+				descricao string?
+			}
+		''')
+
+		Assertions.assertNotNull(result)
+		Assertions.assertTrue(result.eResource.errors.isEmpty, '''Unexpected errors: «result.eResource.errors.join(", ")»''')
+		Assertions.assertEquals(2, result.elements.filter(RecordDsl).head.fields.size)
 	}
 }

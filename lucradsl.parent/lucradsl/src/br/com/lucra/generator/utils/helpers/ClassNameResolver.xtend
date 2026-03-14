@@ -6,6 +6,7 @@ import br.com.lucra.generator.utils.helpers.packagePath.PackagePathResolver
 import br.com.lucra.utils.StringUtils
 import br.com.lucra.lucraDSL.Entity
 import br.com.lucra.lucraDSL.EnumDsl
+import br.com.lucra.lucraDSL.RecordDsl
 
 class ClassNameResolver {
 
@@ -19,6 +20,7 @@ class ClassNameResolver {
 		switch element {
 			Entity: "class"
 			EnumDsl: "enum"
+			RecordDsl: "record"
 			default: unsupported("KEYWORD", element)
 		}
 	}
@@ -32,6 +34,10 @@ class ClassNameResolver {
 	}
 
 	private static def dispatch String baseName(EnumDsl e) {
+		StringUtils.capitalize(e.name)
+	}
+
+	private static def dispatch String baseName(RecordDsl e) {
 		StringUtils.capitalize(e.name)
 	}
 
@@ -62,6 +68,9 @@ class ClassNameResolver {
 			case REST_HANDLER: {
 				ensureEntity(type, element)
 				return "RestHandler"
+			}
+			case RECORD: {
+				return ""
 			}
 			default: {
 				unsupported(type, element)

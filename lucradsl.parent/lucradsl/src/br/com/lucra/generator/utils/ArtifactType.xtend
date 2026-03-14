@@ -7,5 +7,6 @@ enum ArtifactType {
 	SERVICE,
 	SERVICE_IMPL,
 	REST_HANDLER,
-	MAPPER
+	MAPPER,
+	RECORD
 }
