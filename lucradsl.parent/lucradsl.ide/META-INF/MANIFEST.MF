@@ -3,7 +3,7 @@ Automatic-Module-Name: lucradsl.ide
 Bundle-ManifestVersion: 2
 Bundle-Name: lucradsl.ide
 Bundle-Vendor: My Company
-Bundle-Version: 1.2.1
+Bundle-Version: 1.3.0
 Bundle-SymbolicName: lucradsl.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: lucradsl,
